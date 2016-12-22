@@ -8,7 +8,7 @@
 </head>
 <body>
 	<fieldset class="header">
-		<h1>Blog do Curso de Spring-Data JPA | </h1>
+		<h1>Blog do Curso de Spring-Data JPA | Noemi</h1>
 	</fieldset>
 	
 	<c:import url="menu.jsp"/><br>
