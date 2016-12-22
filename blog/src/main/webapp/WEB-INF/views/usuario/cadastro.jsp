@@ -7,7 +7,9 @@
 <link type="text/css" rel="stylesheet" href="<c:url value="/css/style.css" />">
 </head>
 <body>
-	<c:url var="save" value="/usuario/save"/>
+	<c:import url="../menu.jsp"/>
+	
+	<c:url var="save" value="/usuario/save?${_csrf.parameterName}=${_csrf.token}"/>
 	<form:form modelAttribute="usuario" action="${save}" method="post" 
 														 enctype="multipart/form-data">
 		<form:hidden path="id"/>												 
@@ -15,34 +17,25 @@
 			<legend> Cadastro de Usuário</legend>
 			<div class="campo">
 				<form:label path="nome">Nome do Usuário</form:label><br>
-				<form:input path="nome" type="text" required="true"/>
+				<form:input path="nome" type="text"/>
+				<form:errors path="nome" cssClass="error"/>
 			</div>
-			<br>
-			<div>
+			<div class="campo">
 				<form:label path="email">E-mail</form:label><br>
-				<form:input path="email" type="email" required="true"/>
+				<form:input path="email" type="email"/>
+				<form:errors path="email" cssClass="error"/>
 			</div>
-			<br>
 			<div class="campo">
 				<form:label path="senha">Senha</form:label><br>
-				<form:password path="senha" required="true"/>
+				<form:password path="senha"/>
+				<form:errors path="senha" cssClass="error"/>
 			</div>
-			<br>
 			<div class="campo">
-				<label for="file">Avatar</label><br>
-				<input type="file" name="file" required="true"/>
-			</div>
-			<br>
-			<div class="campo">
-				<form:label path="perfil">Perfil</form:label><br>
-				<form:select path="perfil" required="true">
-					<form:option value="ADMIN" label="ADMIN"/>
-					<form:option value="AUTOR" label="AUTOR"/>
-					<form:option value="LEITOR" label="LEITOR"/>
-				</form:select>
-			</div>
-			<br>
-			<div class="campo">
+				<form:label path="file">Avatar</form:label><br>
+				<form:input type="file" path="file"/>
+				<form:errors path="file" cssClass="error"/>
+			</div>			
+			<div>
 				<input type="submit" value="Salvar">
 				<input type="reset" value="Limpar">
 			</div>

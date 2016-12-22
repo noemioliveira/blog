@@ -17,10 +17,17 @@ import br.com.noemi.blog.repository.AvatarRepository;
 @Service
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
 public class AvatarService {
-
+	
 	private static final Logger LOG = Logger.getLogger(AvatarService.class);
+
 	@Autowired
 	private AvatarRepository repository;
+	
+
+	public Avatar findById(Long id) {
+		
+		return repository.findOne(id);
+	}
 	
 	@Transactional(readOnly = false)
 	public void saveOrUpdate(Avatar avatar) {
@@ -37,10 +44,11 @@ public class AvatarService {
 				avatar.setTipo(file.getContentType());
 				avatar.setAvatar(file.getBytes());
 			} catch (IOException e) {
-//				e.printStackTrace();
-				LOG.error("Ocorreu um erro na classe AvatarService "+ e.getMessage());
+
+				LOG.error("Ocorreu um erro em AvatarService: " + e.getMessage());	
 			}
 		}
 		return avatar;
 	}
+
 }

@@ -1,14 +1,16 @@
 package br.com.noemi.blog.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.*;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario extends AbstractPersistable<Long> {
+public class Usuario extends AbstractAuditoria<Long>{
 	
 	@Column(nullable = false, unique = true)
 	private String nome;
@@ -20,7 +22,7 @@ public class Usuario extends AbstractPersistable<Long> {
 	private String senha;
 	
 	@Column(name = "data_cadastro", nullable = false)
-	private LocalDate dataCadastro;//java 8 jpa ainda nao consegue converter  em data
+	private LocalDate dataCadastro;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -29,11 +31,17 @@ public class Usuario extends AbstractPersistable<Long> {
 	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name = "avatar_id")
 	private Avatar avatar;	
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Comentario> comentarios;
+	
+	@Transient
+	private MultipartFile file;
 
-	@Override
-	public void setId(Long id) {
-		super.setId(id);
-	}
+//	@Override
+//	public void setId(Long id) {
+//		super.setId(id);
+//	}
 
 	public String getNome() {
 		return nome;
@@ -82,4 +90,22 @@ public class Usuario extends AbstractPersistable<Long> {
 	public void setAvatar(Avatar avatar) {
 		this.avatar = avatar;
 	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	
+	
 }
